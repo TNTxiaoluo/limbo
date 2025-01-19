@@ -30,6 +30,19 @@ public class LimboEmuActivity extends LimboActivity {
         //TODO: change location to something that the user will have access outside of limbo
         //  like internal storage
         Logger.setupLogFile("/limbo/limbo-arm-log.txt");
+        Shizuku.addRequestPermissionResultListener((requestCode, grantResult) -> {
+    if (grantResult == PackageManager.PERMISSION_GRANTED) {
+        Log.d("Shizuku", "Permission granted");
+    } else {
+        Log.e("Shizuku", "Permission denied");
+    }
+});
+
+if (Shizuku.isPreV23PermissionGranted() || Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+    Log.d("Shizuku", "Permission already granted");
+} else {
+    Shizuku.requestPermission(0);
+}
     }
 
     protected void loadQEMULib(){
